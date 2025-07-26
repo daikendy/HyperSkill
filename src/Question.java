@@ -1,13 +1,14 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Question {
   Scanner scan = new Scanner(System.in);
-  private int totalScore;
   private int questionCounter;
+  private int totalScore;
   final private int limitOfQuestion = 5;
-  
+  private int numberOfQuestion = 1;
+
   public void multipleChoiceQuestion(){
 // Array of questions
     String arr[] = {"What is the chemical symbol for gold?\n", 
@@ -29,23 +30,29 @@ public class Question {
       {"A) Electron", "B) Proton", "C) Neutron", "D) Nucleus"},
       {"A) Carbon Dioxide", "B) Hydrogen", "C) Oxygen", "D) Nitrogen"}
   };
-// Randomly selecting a questions
-    boolean running = true;
-    Random random = new Random();
-    while (running){
-      int index = random.nextInt(arr.length);
-      System.out.println(arr[index]);
-// Printing the options
-      //System.out.println(Arrays.deepToString(new String[][] {options[index]}));
-      for (String option : options[index]) {
-        System.out.println(option);
-    }    
 // answer matching by index
     String answer[] = {"A", "C", "C", "C", "B", "C", "B", "C"};
 
+/// Randomly selecting a questions
+    boolean running = true;
+    Random random = new Random();
+    ArrayList<Integer> usedIndices = new ArrayList<>();  
+    while (running){     
+      int index = random.nextInt(arr.length);
+            if(usedIndices.contains(index)) {
+        continue; // Skip if the question has already been used
+          }
+        usedIndices.add(index);
+// Displaying the question
+      System.out.println(numberOfQuestion++ + ". " + arr[index]);
+// Printing the options
+      for (String option : options[index]) {
+        System.out.println(option);
+    }
 // checking the answer if correct or incorrect
         String input;
         input = scan.nextLine().trim().toUpperCase();
+
         // Handling user input; only accept valid input 
             while (!input.matches("[A-D]")) {
                 System.out.println("Invalid input. Please enter A, B, C, or D:");
@@ -64,16 +71,19 @@ public class Question {
               }
             else{
               questionCounter++;
+              System.out.println("incorrect, the answer is " + answer[index]);
               if(questionCounter == limitOfQuestion){  
                 System.out.println("Total Score: " +  totalScore + "/" + questionCounter);
                 running = false;
               }
             }
-    } 
-    // resets the score
-    totalScore = 0;
-    questionCounter = 0;
-  }
+  } 
+  // resets the score
+  totalScore = 0;
+  questionCounter = 0;
+  numberOfQuestion = 1;
+  System.out.println("End of the quiz. Thanks for playing!");
+}
 
 // prolly the next one im gon be working
   public void trueOrFalseQuestion(){
