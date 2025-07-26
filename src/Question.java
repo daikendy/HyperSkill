@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Question {
   Scanner scan = new Scanner(System.in);
-  private int questionCounter;
   private int totalScore;
   final private int limitOfQuestion = 5;
   private int numberOfQuestion = 1;
@@ -33,56 +34,43 @@ public class Question {
 // answer matching by index
     String answer[] = {"A", "C", "C", "C", "B", "C", "B", "C"};
 
-/// Randomly selecting a questions
-    boolean running = true;
-    Random random = new Random();
-    ArrayList<Integer> usedIndices = new ArrayList<>();  
-    while (running){     
-      int index = random.nextInt(arr.length);
-            if(usedIndices.contains(index)) {
-        continue; // Skip if the question has already been used
+// Shuffle the questions to randomize the order
+  List<Integer> order = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            order.add(i); // fill the list with 0 to arr.length - 1
           }
-        usedIndices.add(index);
-// Displaying the question
-      System.out.println(numberOfQuestion++ + ". " + arr[index]);
-// Printing the options
-      for (String option : options[index]) {
+  Collections.shuffle(order); // randomly shuffle the question order 
+for (int i = 0; i < limitOfQuestion; i++) {
+    int index = order.get(i); // get the next random question index
+
+    System.out.println(numberOfQuestion++ + ". " + arr[index]);
+// prints the options for the question
+    for (String option : options[index]) {
         System.out.println(option);
     }
-// checking the answer if correct or incorrect
-        String input;
-        input = scan.nextLine().trim().toUpperCase();
 
-        // Handling user input; only accept valid input 
-            while (!input.matches("[A-D]")) {
-                System.out.println("Invalid input. Please enter A, B, C, or D:");
-                input = scan.nextLine().trim().toUpperCase();
-                }
-            if (input.equalsIgnoreCase(answer[index])){
-              System.out.println("Correct");
-              totalScore++;
-              // tracks the number of question and stop at specific condition
-              questionCounter++;
-              // Limit the question to certain number
-                  if(questionCounter == limitOfQuestion){
-                    System.out.println("Your Score: " + totalScore + "/" + questionCounter);
-                    running = false;
-                  }
-              }
-            else{
-              questionCounter++;
-              System.out.println("incorrect, the answer is " + answer[index]);
-              if(questionCounter == limitOfQuestion){  
-                System.out.println("Total Score: " +  totalScore + "/" + questionCounter);
-                running = false;
-              }
-            }
-  } 
-  // resets the score
-  totalScore = 0;
-  questionCounter = 0;
-  numberOfQuestion = 1;
-  System.out.println("End of the quiz. Thanks for playing!");
+    // answer input
+    String input = scan.nextLine().trim().toUpperCase();
+
+    while (!input.matches("[A-D]")) {
+        System.out.println("Invalid input. Please enter A, B, C, or D:");
+        input = scan.nextLine().trim().toUpperCase();
+    }
+
+    // check answer
+    if (input.equalsIgnoreCase(answer[index])) {
+        System.out.println("Correct!");
+        totalScore++;
+    } else {
+        System.out.println("Incorrect. The correct answer is " + answer[index]);
+    }
+    System.out.println(); // Just for cleaner spacing
+  }
+    System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
+    System.out.println("End of the quiz. Thanks for playing!");
+    // resets the score
+    totalScore = 0;
+    numberOfQuestion = 1;
 }
 
 // prolly the next one im gon be working
