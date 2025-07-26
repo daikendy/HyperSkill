@@ -68,7 +68,8 @@ for (int i = 0; i < limitOfQuestion; i++) {
   }
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
     System.out.println("End of the quiz. Thanks for playing!");
-    // resets the score
+    
+    // Reset the question counter and score for the next quiz
     totalScore = 0;
     numberOfQuestion = 1;
 }
