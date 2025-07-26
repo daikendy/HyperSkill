@@ -6,7 +6,7 @@ public class Main{
         Question question = new Question();
     
         boolean running = true;
-        
+        // checks the condition for menu selection
         while (running) {
             question.showMenu();
             System.out.print("Enter your choice: ");

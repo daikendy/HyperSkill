@@ -75,6 +75,7 @@ public class Question {
     questionCounter = 0;
   }
 
+// prolly the next one im gon be working
   public void trueOrFalseQuestion(){
 
     String questions[] = {"The Earth revolves around the Sun.",
