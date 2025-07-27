@@ -20,9 +20,13 @@ public class Main{
 
             switch (input) {
                 case 1:
+                    System.out.println("--------Choose the correct answer--------");
+                    System.out.println();
                     question.multipleChoiceQuestion();
                     break;
                 case 2:
+                    System.out.println("--------Answer with True or False--------");
+                    System.out.println();
                     question.trueOrFalseQuestion();
                     break;
                 case 3:
