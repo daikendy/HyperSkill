@@ -10,8 +10,41 @@ public class Question {
   final private int limitOfQuestion = 5;
   private int numberOfQuestion = 1;
 
-  public void multipleChoiceQuestion(){
+  public void shuffleQuestions(int totalIndex){
     order.clear();
+    // Shuffle the questions to randomize the order
+        for (int i = 0; i < totalIndex; i++) {
+            order.add(i); // fill the list with 0 to arr.length - 1
+          }
+  Collections.shuffle(order); // randomly shuffle the question order
+  }
+
+public void resetsQuestions(){
+    System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
+    System.out.println("End of the quiz. Thanks for playing!");
+    // Reset the question counter and score for the next quiz
+    totalScore = 0;
+    numberOfQuestion = 1;
+  }
+  // Reusable method for getting input with BACK option and validation
+public String getInput(String pattern, String prompt) {
+    while (true) {
+        System.out.println(prompt);
+        System.out.println("Type 'BACK' to return to the main menu.");
+        String input = scan.nextLine().trim().toUpperCase();
+
+        if (input.equals("BACK")) {
+            totalScore = 0;
+            numberOfQuestion = 1;
+            return "BACK";
+        }
+        if (input.matches(pattern)) {
+            return input;
+        }
+        System.out.println("Invalid input. Try again.");
+    }
+}
+  public void multipleChoiceQuestion(){
 // Array of questions
     String arr[] = {"What is the chemical symbol for gold?\n", 
     "Which organ is responsible for pumping blood throughout the human body?\n", 
@@ -35,11 +68,8 @@ public class Question {
 // answer matching by index
     String answer[] = {"A", "C", "C", "C", "B", "C", "B", "C"};
 
-    // Shuffle the questions to randomize the order
-        for (int i = 0; i < arr.length; i++) {
-            order.add(i); // fill the list with 0 to arr.length - 1
-          }
-  Collections.shuffle(order); // randomly shuffle the question order 
+// Shuffle the questions to randomize the order
+    shuffleQuestions(arr.length);
 for (int i = 0; i < limitOfQuestion; i++) {
     int index = order.get(i); // get the next random question index
 
@@ -48,20 +78,9 @@ for (int i = 0; i < limitOfQuestion; i++) {
     for (String option : options[index]) {
         System.out.println(option);
     }
-
     // answer input
-    System.out.println("Type 'BACK' to return to the main menu.");
-    String input = scan.nextLine().trim().toUpperCase();
-    // Check if the user wants to go back to the main menu
-      if (input.equals("BACK")) {
-          totalScore = 0;
-          numberOfQuestion = 1;
-        return;// Go back to the main menu
-    }
-    while (!input.matches("[A-D]")) {
-        System.out.println("Invalid input. Please enter A, B, C, or D:");
-        input = scan.nextLine().trim().toUpperCase();
-    }
+    String input = getInput("[A-D]", "Enter A, B, C, or D:");
+    if (input.equals("BACK")) return;
 
     // check answer
     if (input.equalsIgnoreCase(answer[index])) {
@@ -72,18 +91,12 @@ for (int i = 0; i < limitOfQuestion; i++) {
     }
     System.out.println(); // Just for cleaner spacing
   }
-    System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
-    System.out.println("End of the quiz. Thanks for playing!");
-    
-    // Reset the question counter and score for the next quiz
-    totalScore = 0;
-    numberOfQuestion = 1;
+    resetsQuestions();
 }
 
 // True or False Questions
   public void trueOrFalseQuestion(){
-    order.clear();
-String questions[] = {
+    String questions[] = {
     "The Earth revolves around the Sun.",
     "Water boils at 100°C at sea level.",
     "Sound travels faster in air than in water.",
@@ -96,28 +109,15 @@ String questions[] = {
 // answer matching by index
     String answer[] = {"T", "T", "F", "T", "T", "T", "F", "T"};
 // Shuffle the questions to randomize the order
-        for (int i = 0; i < questions.length; i++) {
-            order.add(i); // fill the list with 0 to arr.length - 1
-          }
-  Collections.shuffle(order); // randomly shuffle the question order 
+      shuffleQuestions(questions.length);
 for (int i = 0; i < limitOfQuestion; i++) {
     int index = order.get(i); // get the next random question index
 
     System.out.println(numberOfQuestion++ + ". " + questions[index]);
 
     // answer input
-    System.out.println("Type 'BACK' to return to the main menu.");
-    String input = scan.nextLine().trim().toUpperCase();
-          if (input.equals("BACK")) {
-          totalScore = 0;
-          numberOfQuestion = 1;
-        return;// Go back to the main menu
-    }
-
-    while (!input.equals("T") && !input.equals("F")) {
-        System.out.println("Invalid input. Please enter T or F:");
-        input = scan.nextLine().trim().toUpperCase();
-    }
+    String input = getInput("^[TF]$", "Enter T or F:");
+    if (input.equals("BACK")) return;
 
     // check answer
     if (input.equalsIgnoreCase(answer[index])) {
@@ -128,12 +128,7 @@ for (int i = 0; i < limitOfQuestion; i++) {
     }
     System.out.println(); // Just for cleaner spacing
   }
-    System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
-    System.out.println("End of the quiz. Thanks for playing!");
-    
-    // Reset the question counter and score for the next quiz
-    totalScore = 0;
-    numberOfQuestion = 1;
+    resetsQuestions();
   }
 
   public void showMenu(){
@@ -144,6 +139,6 @@ for (int i = 0; i < limitOfQuestion; i++) {
   }
 
   public void quitProgram(){
-    System.out.println("Quiting the program. See you!");
+    System.out.println("Quitting the program. See you!");
   }
 }
