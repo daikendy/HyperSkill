@@ -3,6 +3,66 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+class MultipleChoiceQuestion{
+/* Getters for the arrays and options
+   These methods allow access to the private arrays from outside the class */
+  public String[] getQuestions() {
+    return questions.clone();
+  }
+public String[][] getOptions() {
+    String[][] copy = new String[options.length][];
+    for (int i = 0; i < options.length; i++) {
+        copy[i] = options[i].clone();
+    }
+    return copy;
+}
+  public String[] getAnswer() {
+    return answer.clone();
+  }
+
+  private String[] questions = {"What is the chemical symbol for gold?\n", 
+    "Which organ is responsible for pumping blood throughout the human body?\n", 
+    "What gas do plants absorb from the atmosphere for photosynthesis?\n",
+    "What is the powerhouse of the cell?",
+    "What is H2O commonly known as",
+    "Which planet is known as the \"Red Planet\"?",
+    "Which part of the atom has a positive charge?",
+    "What gas do animals breathe in for survival?",};
+  private String[][] options =  {
+      {"A) Au", "B) Ag", "C) Gd", "D) Go"},
+      {"A) Brain", "B) Kidney", "C) Heart", "D) Lungs"},
+      {"A) Oxygen", "B) Nitrogen", "C) Carbon Dioxide", "D) Hydrogen"},
+      {"A) Nucleus", "B) Ribosome", "C) Mitochondria", "D) Golgi Apparatus"},
+      {"A) Salt", "B) Water", "C) Hydrogen Peroxide", "D) Oxygen"},
+      {"A) Earth", "B) Jupiter", "C) Mars", "D) Venus"},
+      {"A) Electron", "B) Proton", "C) Neutron", "D) Nucleus"},
+      {"A) Carbon Dioxide", "B) Hydrogen", "C) Oxygen", "D) Nitrogen"}
+  };
+  private String[] answer = {"A", "C", "C", "C", "B", "C", "B", "C"};
+}
+
+class TrueOrFalseQuestion{
+  /* Getters for the arrays and options
+   These methods allow access to the private arrays from outside the class */
+  public String[] getQuestions() {
+    return questions.clone();
+  }
+  public String[] getAnswer() {
+    return answer.clone();
+  }
+  private String[] questions = {
+    "The Earth revolves around the Sun.",
+    "Water boils at 100°C at sea level.",
+    "Sound travels faster in air than in water.",
+    "Humans share approximately 60% of their DNA with bananas.",
+    "The chemical symbol for iron is Fe.",
+    "Plants produce oxygen during photosynthesis.",
+    "Electric current is measured in volts.",
+    "The ozone layer protects Earth from harmful ultraviolet radiation."
+  };
+  private String[] answer = {"T", "T", "F", "T", "T", "T", "T", "T"};
+}
+
 public class Question {
   Scanner scan = new Scanner(System.in);
   List<Integer> order = new ArrayList<>();
@@ -23,7 +83,7 @@ public class Question {
 
 /* Method to check the answer and update the score
   It takes the user's input and the correct answer as parameters*/ 
-  public void checksAnswer(String input, String correctAnswer){
+  public void checkAnswers(String input, String correctAnswer){
     if (input.equalsIgnoreCase(correctAnswer)) {
         System.out.println("Correct!");
         totalScore++;
@@ -35,7 +95,7 @@ public class Question {
 
 /* Method to reset the question counter and score
     displays the total score and a thank you message */
-public void resetsQuestions(){
+public void resetQuestions(){
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
     System.out.println("End of the quiz. Thanks for playing!");
     // Reset the question counter and score for the next quiz
@@ -61,77 +121,43 @@ public String getInput(String pattern, String prompt) {
         System.out.println("Invalid input. Try again.");
     }
 }
-  public void multipleChoiceQuestion(){
-// Array of questions
-    String arr[] = {"What is the chemical symbol for gold?\n", 
-    "Which organ is responsible for pumping blood throughout the human body?\n", 
-    "What gas do plants absorb from the atmosphere for photosynthesis?\n",
-    "What is the powerhouse of the cell?",
-    "What is H2O commonly known as",
-    "Which planet is known as the \"Red Planet\"?",
-    "Which part of the atom has a positive charge?",
-    "What gas do animals breathe in for survival?",};
-// Options of Answers
-    String[][] options = {
-      {"A) Au", "B) Ag", "C) Gd", "D) Go"},
-      {"A) Brain", "B) Kidney", "C) Heart", "D) Lungs"},
-      {"A) Oxygen", "B) Nitrogen", "C) Carbon Dioxide", "D) Hydrogen"},
-      {"A) Nucleus", "B) Ribosome", "C) Mitochondria", "D) Golgi Apparatus"},
-      {"A) Salt", "B) Water", "C) Hydrogen Peroxide", "D) Oxygen"},
-      {"A) Earth", "B) Jupiter", "C) Mars", "D) Venus"},
-      {"A) Electron", "B) Proton", "C) Neutron", "D) Nucleus"},
-      {"A) Carbon Dioxide", "B) Hydrogen", "C) Oxygen", "D) Nitrogen"}
-  };
-// answer matching by index
-    String answer[] = {"A", "C", "C", "C", "B", "C", "B", "C"};
 
-// Shuffle the questions to randomize the order
-    shuffleQuestions(arr.length);
+  public void multipleChoiceQuestion(){
+    MultipleChoiceQuestion question = new MultipleChoiceQuestion();
+    shuffleQuestions(question.getQuestions().length);
 for (int i = 0; i < limitOfQuestion; i++) {
     int index = order.get(i); // get the next random question index
 
-    System.out.println(numberOfQuestion++ + ". " + arr[index]);
+    System.out.println(numberOfQuestion++ + ". " + question.getQuestions()[index]);
 // prints the options for the question
-    for (String option : options[index]) {
+    for (String option : question.getOptions()[index]) {
         System.out.println(option);
     }
     // answer input
     String input = getInput("[A-D]", "Enter A, B, C, or D:");
     if (input.equals("BACK")) return;
     // check answer
-    checksAnswer(input, answer[index]);
+    checkAnswers(input, question.getAnswer()[index]);
   }
-    resetsQuestions();
+    resetQuestions();
 }
 
 // True or False Questions
   public void trueOrFalseQuestion(){
-    String questions[] = {
-    "The Earth revolves around the Sun.",
-    "Water boils at 100°C at sea level.",
-    "Sound travels faster in air than in water.",
-    "Humans share approximately 60% of their DNA with bananas.",
-    "The chemical symbol for iron is Fe.",
-    "Plants produce oxygen during photosynthesis.",
-    "Electric current is measured in volts.",
-    "The ozone layer protects Earth from harmful ultraviolet radiation."
-};
-// answer matching by index
-    String answer[] = {"T", "T", "F", "T", "T", "T", "F", "T"};
-// Shuffle the questions to randomize the order
-      shuffleQuestions(questions.length);
+    TrueOrFalseQuestion question = new TrueOrFalseQuestion();
+      shuffleQuestions(question.getQuestions().length);
 for (int i = 0; i < limitOfQuestion; i++) {
     int index = order.get(i); // get the next random question index
 
-    System.out.println(numberOfQuestion++ + ". " + questions[index]);
+    System.out.println(numberOfQuestion++ + ". " + question.getQuestions()[index]);
 
     // answer input
     String input = getInput("^[TF]$", "Enter T or F:");
     if (input.equals("BACK")) return;
     // check answer
-    checksAnswer(input, answer[index]);
+    checkAnswers(input, question.getAnswer()[index]);
   }
-    resetsQuestions();
+    resetQuestions();
   }
 
   public void showMenu(){
