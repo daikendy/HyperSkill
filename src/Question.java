@@ -10,6 +10,8 @@ public class Question {
   final private int limitOfQuestion = 5;
   private int numberOfQuestion = 1;
 
+/*shuffleQuestions method to randomize the order of questions
+  It takes the total number of questions as a parameter */
   public void shuffleQuestions(int totalIndex){
     order.clear();
     // Shuffle the questions to randomize the order
@@ -19,6 +21,20 @@ public class Question {
   Collections.shuffle(order); // randomly shuffle the question order
   }
 
+/* Method to check the answer and update the score
+  It takes the user's input and the correct answer as parameters*/ 
+  public void checksAnswer(String input, String correctAnswer){
+    if (input.equalsIgnoreCase(correctAnswer)) {
+        System.out.println("Correct!");
+        totalScore++;
+    } else {
+        System.out.println("Incorrect. The correct answer is " + correctAnswer);
+    }
+    System.out.println(); // Just for cleaner spacing
+  }
+
+/* Method to reset the question counter and score
+    displays the total score and a thank you message */
 public void resetsQuestions(){
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
     System.out.println("End of the quiz. Thanks for playing!");
@@ -26,7 +42,8 @@ public void resetsQuestions(){
     totalScore = 0;
     numberOfQuestion = 1;
   }
-  // Reusable method for getting input with BACK option and validation
+
+// Reusable method for getting input with BACK option and validation
 public String getInput(String pattern, String prompt) {
     while (true) {
         System.out.println(prompt);
@@ -81,15 +98,8 @@ for (int i = 0; i < limitOfQuestion; i++) {
     // answer input
     String input = getInput("[A-D]", "Enter A, B, C, or D:");
     if (input.equals("BACK")) return;
-
     // check answer
-    if (input.equalsIgnoreCase(answer[index])) {
-        System.out.println("Correct!");
-        totalScore++;
-    } else {
-        System.out.println("Incorrect. The correct answer is " + answer[index]);
-    }
-    System.out.println(); // Just for cleaner spacing
+    checksAnswer(input, answer[index]);
   }
     resetsQuestions();
 }
@@ -118,15 +128,8 @@ for (int i = 0; i < limitOfQuestion; i++) {
     // answer input
     String input = getInput("^[TF]$", "Enter T or F:");
     if (input.equals("BACK")) return;
-
     // check answer
-    if (input.equalsIgnoreCase(answer[index])) {
-        System.out.println("Correct!");
-        totalScore++;
-    } else {
-        System.out.println("Incorrect. The correct answer is " + answer[index]);
-    }
-    System.out.println(); // Just for cleaner spacing
+    checksAnswer(input, answer[index]);
   }
     resetsQuestions();
   }
