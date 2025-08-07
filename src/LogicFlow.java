@@ -80,16 +80,43 @@ public class LogicFlow {
         System.out.println("Invalid input. Try again.");
     }
 }
+// Method to avoid input choice error
+// It reads the input and checks if it matches the expected pattern
+// Returns the parsed integer value of the input
+public int avoidInputChoiceError(int min, int max) {
+    String regex = String.format("[%d-%d]", min, max);
+    String scanChoice = scan.nextLine().trim();
+    while (!scanChoice.matches(regex)) {
+        System.out.println("Invalid input. Please enter a number between " + min + " and " + max + ":");
+        scanChoice = scan.nextLine().trim();
+    }
+    return Integer.parseInt(scanChoice);
+}
+
+
 // Multiple Choice Questions
   public void multipleChoiceQuestion(){
-    QuestionType question = new MultipleChoiceQuestion();
-    runQuiz(question, "^[A-D]$", "Choose the correct option (A, B, C, or D):");
+    System.out.println("choose the type of question" 
+        + "\n1. Science Quiz"
+        + "\n2. Geography Quiz"
+        + "\n3. General Knowledge Quiz");
+        int userChoice = avoidInputChoiceError(1,3);
+    switch(userChoice){
+      case 1: 
+        System.out.println("Welcome to Science Quiz");
+        runQuiz(new MCQScience(), "^[A-D]$", "Choose the correct option (A, B, C, or D):");
+        break;
+      case 2: 
+        System.out.println("Welcome to Geography Quiz");
+        runQuiz(new MCQGeography(), "^[A-D]$", "Choose the correct option (A, B, C, or D):");
+        break;
+      case 3:
+      System.out.println("Welcome to General MCQ Quiz");
+      runQuiz(new GeneralMCQ(), "^[A-D]$", "Choose the correct option (A, B, C, or D):");
+      break;
+    }
+
 }
-// General MCQ Questions
-  public void generalMCQ(){
-    QuestionType question = new GeneralMCQ();
-    runQuiz(question, "^[A-D]$", "Choose the correct option (A, B, C, or D):");
-  }
 // True or False Questions
   public void trueOrFalseQuestion(){
     QuestionType question = new TrueOrFalseQuestion();
@@ -99,9 +126,8 @@ public class LogicFlow {
   public void showMenu(){
     System.out.println("<--------Choose-------->");
     System.out.println("1. Multiple Choice");
-    System.out.println("2. General MCQ");
-    System.out.println("3. True Or False");
-    System.out.println("4. Quit");
+    System.out.println("2. True Or False");
+    System.out.println("3. Quit");
   }
 
   public void quitProgram(){
