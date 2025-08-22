@@ -44,11 +44,11 @@ class GeneralMCQ extends MultipleChoiceQuestion {
             "What is the capital of France?\n",
             "What is the largest planet in our solar system?\n",
             "What is the boiling point of water at sea level in Celsius?\n",
-            "What is the main ingredient in guacamole?",
-            "What is the chemical formula for table salt?",
-            "Which country is known as the Land of the Rising Sun?",
-            "What is the hardest natural substance on Earth?",
-            "What is the primary language spoken in Brazil?"
+            "What is the main ingredient in guacamole?\n",
+            "What is the chemical formula for table salt?\n",
+            "Which country is known as the Land of the Rising Sun?\n",
+            "What is the hardest natural substance on Earth?\n",
+            "What is the primary language spoken in Brazil?\n"
             },
         new String[][]{
             {"A. Paris", "B. London", "C. Berlin", "D. Madrid"},
@@ -76,10 +76,10 @@ class MCQScience extends MultipleChoiceQuestion {
             "Which organ is responsible for pumping blood throughout the human body?\n", 
             "What gas do plants absorb from the atmosphere for photosynthesis?\n",
             "What is the powerhouse of the cell?",
-            "What is H2O commonly known as",
-            "Which planet is known as the \"Red Planet\"?",
-            "Which part of the atom has a positive charge?",
-            "What gas do animals breathe in for survival?"
+            "What is H2O commonly known as?\n",
+            "Which planet is known as the \"Red Planet\"?\n",
+            "Which part of the atom has a positive charge?\n",
+            "What gas do animals breathe in for survival?\n"
         },
         new String[][]
         {
@@ -135,14 +135,14 @@ class TrueOrFalseQuestion implements QuestionType {
 
     public TrueOrFalseQuestion() {
         this.questions = new String[]{
-            "The Earth revolves around the Sun.",
-            "Water boils at 100°C at sea level.",
-            "Sound travels faster in air than in water.",
-            "Humans share approximately 60% of their DNA with bananas.",
-            "The chemical symbol for iron is Fe.",
-            "Plants produce oxygen during photosynthesis.",
-            "Electric current is measured in volts.",
-            "The ozone layer protects Earth from harmful ultraviolet radiation."
+            "The Earth revolves around the Sun.\n",
+            "Water boils at 100°C at sea level.\n",
+            "Sound travels faster in air than in water.\n",
+            "Humans share approximately 60% of their DNA with bananas.\n",
+            "The chemical symbol for iron is Fe.\n",
+            "Plants produce oxygen during photosynthesis.\n",
+            "Electric current is measured in volts.\n",
+            "The ozone layer protects Earth from harmful ultraviolet radiation.\n"
         };
         this.answer = new String[]{"T", "T", "F", "T", "T", "T", "T", "T"};
     }
