@@ -7,6 +7,7 @@ public class LogicFlow {
   Scanner scan = new Scanner(System.in);
   List<Integer> order = new ArrayList<>();
   private int totalScore;
+  private int skippedQuestions;
   final private int limitOfQuestion = 5;
   private int numberOfQuestion = 1;
 
@@ -35,6 +36,12 @@ public class LogicFlow {
         }
         String input = getInput(inputPattern, inputPrompt);
         if (input.equals("BACK")) return;
+        if (input.equals("SKIP")) {
+          System.out.println("Question skipped. Correct answer is " + questionType.getAnswer()[index]);
+          skippedQuestions++;
+          System.out.println();
+          continue;
+        }
         checkAnswers(input, questionType.getAnswer()[index]);
     }
     resetQuestions();
@@ -46,7 +53,8 @@ public class LogicFlow {
     if (input.equalsIgnoreCase(correctAnswer)) {
         System.out.println("Correct!");
         totalScore++;
-    } else {
+    }
+    else {
         System.out.println("Incorrect. The correct answer is " + correctAnswer);
     }
     System.out.println(); // Just for cleaner spacing
@@ -56,17 +64,21 @@ public class LogicFlow {
     displays the total score and a thank you message */
   public void resetQuestions(){
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
+    System.out.println("Total skipped questions: " + skippedQuestions);
     System.out.println("End of the quiz. Thanks for playing!");
     // Reset the question counter and score for the next quiz
     totalScore = 0;
+    skippedQuestions = 0;
     numberOfQuestion = 1;
   }
 
 // Reusable method for getting input with BACK option and validation
   public String getInput(String pattern, String prompt) {
     while (true) {
+        System.out.println();
         System.out.println(prompt);
         System.out.println("Type 'BACK' to return to the main menu.");
+        System.out.println("Type 'SKIP' to skip to the next question.");
         String input = scan.nextLine().trim().toUpperCase();
 
         if (input.equals("BACK")) {
@@ -74,6 +86,7 @@ public class LogicFlow {
             numberOfQuestion = 1;
             return "BACK";
         }
+        if (input.equals("SKIP")) return "SKIP";
         if (input.matches(pattern)) {
             return input;
         }
@@ -83,14 +96,14 @@ public class LogicFlow {
 // Method to avoid input choice error
 // It reads the input and checks if it matches the expected pattern
 // Returns the parsed integer value of the input
-public int avoidInputChoiceError(int min, int max) {
-    String regex = String.format("[%d-%d]", min, max);
-    String scanChoice = scan.nextLine().trim();
-    while (!scanChoice.matches(regex)) {
+    public int avoidInputChoiceError(int min, int max) {
+        String regex = String.format("[%d-%d]", min, max);
+        String scanChoice = scan.nextLine().trim();
+      while (!scanChoice.matches(regex)) {
         System.out.println("Invalid input. Please enter a number between " + min + " and " + max + ":");
         scanChoice = scan.nextLine().trim();
     }
-    return Integer.parseInt(scanChoice);
+        return Integer.parseInt(scanChoice);
 }
 
 
