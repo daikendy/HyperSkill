@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
+
 interface HasNoOptionsQuestion{
     String getQuestions();
     String getAnswer();
@@ -300,7 +301,7 @@ class MCQGeography implements QuestionType {
 
 @Entity
 @Table(name = "tf_questions")
-class TrueOrFalseQuestion implements HasNoOptionsQuestion {
+class TrueOrFalseQuestion implements QuestionType {
 
     @Id
     private int id;
@@ -310,6 +311,19 @@ class TrueOrFalseQuestion implements HasNoOptionsQuestion {
 
     @Column(name="answer")
     private String  answer;
+
+    @Column(name="options_a")
+    private String options_a;
+
+    @Column(name="options_b")
+    private String options_b;
+    
+    @Column(name="options_c")
+    private String options_c;
+
+    @Column(name="options_d")
+    private String options_d;
+
 
     public TrueOrFalseQuestion(String questions, String answer){
         this.questions = questions;
@@ -335,7 +349,24 @@ class TrueOrFalseQuestion implements HasNoOptionsQuestion {
 
     @Override
     public boolean hasOptions() {
-        return true;
+        return false;
     }
+    @Override
+    public String getOptions_a() {
+        return "-----";
+    }
+    @Override
+    public String getOptions_b() {
+        return "-----";
+    }
+    @Override
+    public String getOptions_c() {
+        return "-----";
+    }
+    @Override
+    public String getOptions_d() {
+        return "-----";
+    }
+
 }
 
