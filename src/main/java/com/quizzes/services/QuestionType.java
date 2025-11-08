@@ -1,6 +1,5 @@
 package com.quizzes.services;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import com.quizzes.utilities.HibernateUtil;
@@ -9,8 +8,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-
 
 interface HasNoOptionsQuestion{
     String getQuestions();
@@ -26,9 +23,7 @@ public interface QuestionType extends HasNoOptionsQuestion{
     String getOptions_b();
     String getOptions_c();
     String getOptions_d();
-    
 }
-
 
 @Entity
 @Table(name = "mcq_general")
@@ -41,8 +36,8 @@ class GeneralMCQ implements QuestionType {
     private String questions;
 
     @Column(name="options_a")
+    
     private String options_a;
-
     @Column(name="options_b")
     private String options_b;
     
@@ -55,18 +50,14 @@ class GeneralMCQ implements QuestionType {
     @Column(name="answer")
     private String answer;
 
-    public GeneralMCQ() {}
-
     @Override
     public boolean hasOptions() {
         return true;
     }
 
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -74,7 +65,6 @@ class GeneralMCQ implements QuestionType {
     public String getQuestions() {
         return questions;
     }
-
     public void setQuestions(String questions) {
         this.questions = questions;
     }
@@ -82,7 +72,6 @@ class GeneralMCQ implements QuestionType {
     public String getOptions_a() {
         return options_a;
     }
-
     public void setOptions_a(String options_a) {
         this.options_a = options_a;
     }
@@ -90,7 +79,6 @@ class GeneralMCQ implements QuestionType {
     public String getOptions_b() {
         return options_b;
     }
-
     public void setOptions_b(String options_b) {
         this.options_b = options_b;
     }
@@ -98,7 +86,6 @@ class GeneralMCQ implements QuestionType {
     public String getOptions_c() {
         return options_c;
     }
-
     public void setOptions_c(String options_c) {
         this.options_c = options_c;
     }
@@ -106,7 +93,6 @@ class GeneralMCQ implements QuestionType {
     public String getOptions_d() {
         return options_d;
     }
-
     public void setOptions_d(String options_d) {
         this.options_d = options_d;
     }
@@ -114,7 +100,6 @@ class GeneralMCQ implements QuestionType {
     public String getAnswer() {
         return answer;
     }
-
     public void setAnswer(String answer) {
         this.answer = answer;
     }
@@ -145,9 +130,6 @@ class MCQScience implements QuestionType  {
     @Column(name="answer")
     private String answer;
 
-    public MCQScience() {}
-
-
     @Override
     public boolean hasOptions() {
         return true;
@@ -156,7 +138,6 @@ class MCQScience implements QuestionType  {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -164,7 +145,6 @@ class MCQScience implements QuestionType  {
     public String getQuestions() {
         return questions;
     }
-
     public void setQuestions(String questions) {
         this.questions = questions;
     }
@@ -172,7 +152,6 @@ class MCQScience implements QuestionType  {
     public String getOptions_a() {
         return options_a;
     }
-
     public void setOptions_a(String options_a) {
         this.options_a = options_a;
     }
@@ -180,7 +159,6 @@ class MCQScience implements QuestionType  {
     public String getOptions_b() {
         return options_b;
     }
-
     public void setOptions_b(String options_b) {
         this.options_b = options_b;
     }
@@ -188,7 +166,6 @@ class MCQScience implements QuestionType  {
     public String getOptions_c() {
         return options_c;
     }
-
     public void setOptions_c(String options_c) {
         this.options_c = options_c;
     }
@@ -196,7 +173,6 @@ class MCQScience implements QuestionType  {
     public String getOptions_d() {
         return options_d;
     }
-
     public void setOptions_d(String options_d) {
         this.options_d = options_d;
     }
@@ -204,7 +180,6 @@ class MCQScience implements QuestionType  {
     public String getAnswer() {
         return answer;
     }
-
     public void setAnswer(String answer) {
         this.answer = answer;
     }
@@ -235,9 +210,7 @@ class MCQGeography implements QuestionType {
     @Column(name="answer")
     private String answer;
     
-    public MCQGeography() {}
-
-        @Override
+    @Override
     public boolean hasOptions() {
         return true;
     }
@@ -245,7 +218,6 @@ class MCQGeography implements QuestionType {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -253,7 +225,6 @@ class MCQGeography implements QuestionType {
     public String getQuestions() {
         return questions;
     }
-
     public void setQuestions(String questions) {
         this.questions = questions;
     }
@@ -261,7 +232,6 @@ class MCQGeography implements QuestionType {
     public String getOptions_a() {
         return options_a;
     }
-
     public void setOptions_a(String options_a) {
         this.options_a = options_a;
     }
@@ -269,7 +239,6 @@ class MCQGeography implements QuestionType {
     public String getOptions_b() {
         return options_b;
     }
-
     public void setOptions_b(String options_b) {
         this.options_b = options_b;
     }
@@ -277,7 +246,6 @@ class MCQGeography implements QuestionType {
     public String getOptions_c() {
         return options_c;
     }
-
     public void setOptions_c(String options_c) {
         this.options_c = options_c;
     }
@@ -285,7 +253,6 @@ class MCQGeography implements QuestionType {
     public String getOptions_d() {
         return options_d;
     }
-
     public void setOptions_d(String options_d) {
         this.options_d = options_d;
     }
@@ -293,7 +260,6 @@ class MCQGeography implements QuestionType {
     public String getAnswer() {
         return answer;
     }
-
     public void setAnswer(String answer) {
         this.answer = answer;
     }
@@ -324,17 +290,9 @@ class TrueOrFalseQuestion implements QuestionType {
     @Column(name="options_d")
     private String options_d;
 
-
-    public TrueOrFalseQuestion(String questions, String answer){
-        this.questions = questions;
-        this.answer = answer;
-    }
-    public TrueOrFalseQuestion() {}
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -342,7 +300,6 @@ class TrueOrFalseQuestion implements QuestionType {
     public String getQuestions() {
         return questions;
     }
-
     public String getAnswer() {
         return answer;
     }
@@ -353,20 +310,18 @@ class TrueOrFalseQuestion implements QuestionType {
     }
     @Override
     public String getOptions_a() {
-        return "-----";
+        return "--------";
     }
     @Override
     public String getOptions_b() {
-        return "-----";
+        return "--------";
     }
     @Override
     public String getOptions_c() {
-        return "-----";
+        return "--------";
     }
     @Override
     public String getOptions_d() {
-        return "-----";
+        return "--------";
     }
-
 }
-
