@@ -6,7 +6,9 @@ public class Questions {
 
   // Multiple Choice Questions
   public void multipleChoiceQuestion(){
-    System.out.println("choose the type of question" 
+    System.out.println();
+    System.out.println("==== Multiple Choice Question ==="
+        + "\n Choose the type of question" 
         + "\n1. Science Quiz"
         + "\n2. Geography Quiz"
         + "\n3. General Knowledge Quiz");
