@@ -16,22 +16,6 @@ public class LogicFlow {
   final static private int limitOfQuestion = 5;
   private static int numberOfQuestion = 1;
 
-  public int getTotalScore() {
-    return totalScore;
-  }
-
-  public void setTotalScore(int totalScore) {
-    LogicFlow.totalScore = totalScore;
-  }
-
-  public int getNumberOfQuestion() {
-    return numberOfQuestion;
-  }
-
-  public void setNumberOfQuestion(int numberOfQuestion) {
-    LogicFlow.numberOfQuestion = numberOfQuestion;
-  }
-
 // runQuiz method to handle the quiz logic
   // It takes a QuestionType object, input pattern for validation, and input prompt as parameters
     public  static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
@@ -94,28 +78,6 @@ private static List<? extends QuestionType> loadQuestions(Class<? extends Questi
     }
 }
 
-    // Reusable method for getting input with BACK option and validation
-    public static String getInput(String pattern, String prompt) {
-    while (true) {
-        System.out.println();
-        System.out.println(prompt);
-        System.out.println("Type 'BACK' to return to the main menu.");
-        System.out.println("Type 'SKIP' to skip to the next question.");
-        String input = scan.nextLine().trim().toUpperCase();
-
-        if (input.equals("BACK")) {
-            totalScore = 0;
-            numberOfQuestion = 1;
-            return "BACK";
-        }
-        if (input.equals("SKIP")) return "SKIP";
-        if (input.matches(pattern)) {
-            return input;
-        }
-        System.out.println("Invalid input. Try again.");
-    }
-}
-
 /* Method to check the answer and update the score
   It takes the user's input and the correct answer as parameters*/ 
   public static void checkAnswers(String input, String correctAnswer){
@@ -141,6 +103,28 @@ private static List<? extends QuestionType> loadQuestions(Class<? extends Questi
     numberOfQuestion = 1;
   }
 
+    // Reusable method for getting input with BACK option and validation
+  public static String getInput(String pattern, String prompt) {
+    while (true) {
+        System.out.println();
+        System.out.println(prompt);
+        System.out.println("Type 'BACK' to return to the main menu.");
+        System.out.println("Type 'SKIP' to skip to the next question.");
+        String input = scan.nextLine().trim().toUpperCase();
+
+        if (input.equals("BACK")) {
+            totalScore = 0;
+            numberOfQuestion = 1;
+            return "BACK";
+        }
+        if (input.equals("SKIP")) return "SKIP";
+        if (input.matches(pattern)) {
+            return input;
+        }
+        System.out.println("Invalid input. Try again.");
+    }
+}
+
   public static void showMenu(){
     System.out.println("<--------Choose-------->");
     System.out.println("1. Multiple Choice");
@@ -150,5 +134,21 @@ private static List<? extends QuestionType> loadQuestions(Class<? extends Questi
 
   public static void quitProgram(){
     System.out.println("Quitting the program. See you!");
+  }
+
+    public int getTotalScore() {
+    return totalScore;
+  }
+
+  public void setTotalScore(int totalScore) {
+    LogicFlow.totalScore = totalScore;
+  }
+
+  public int getNumberOfQuestion() {
+    return numberOfQuestion;
+  }
+
+  public void setNumberOfQuestion(int numberOfQuestion) {
+    LogicFlow.numberOfQuestion = numberOfQuestion;
   }
 }
