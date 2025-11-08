@@ -7,22 +7,21 @@ import java.util.Scanner;
 import org.hibernate.Session;
 
 import com.quizzes.utilities.HibernateUtil;
-import com.quizzes.utilities.InputValidator;
 
 public class LogicFlow {
-  Scanner scan = new Scanner(System.in);
+  static Scanner scan = new Scanner(System.in);
   List<Integer> order = new ArrayList<>();
-  private int totalScore;
-  private int skippedQuestions;
-  final private int limitOfQuestion = 5;
-  private int numberOfQuestion = 1;
+  private static int totalScore;
+  private static int skippedQuestions;
+  final static private int limitOfQuestion = 5;
+  private static int numberOfQuestion = 1;
 
   public int getTotalScore() {
     return totalScore;
   }
 
   public void setTotalScore(int totalScore) {
-    this.totalScore = totalScore;
+    LogicFlow.totalScore = totalScore;
   }
 
   public int getNumberOfQuestion() {
@@ -30,38 +29,12 @@ public class LogicFlow {
   }
 
   public void setNumberOfQuestion(int numberOfQuestion) {
-    this.numberOfQuestion = numberOfQuestion;
+    LogicFlow.numberOfQuestion = numberOfQuestion;
   }
-
-/*shuffleQuestions method to randomize the order of questions
-  It takes the total number of questions as a parameter */
-  public void shuffleQuestions(Class<? extends QuestionType> questionClass) {
-    order.clear();
-    
-    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        session.beginTransaction();
-        
-        // Only query the specific type you need
-        List<?> questionList = session.createQuery(
-            "from " + questionClass.getSimpleName() + " order by id asc", 
-            questionClass
-        ).list();
-        
-        for (int i = 0; i < questionList.size(); i++) {
-            order.add(i);
-        }
-        
-        Collections.shuffle(order);
-        session.getTransaction().commit();
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
 
 // runQuiz method to handle the quiz logic
   // It takes a QuestionType object, input pattern for validation, and input prompt as parameters
-    public void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
+    public  static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
     // Get the list of questions from database
     List<? extends QuestionType> questionList = loadQuestions(questionClass);
     
@@ -76,7 +49,7 @@ public class LogicFlow {
         shuffledIndices.add(i);
     }
     Collections.shuffle(shuffledIndices);
-    
+
     // Run quiz with actual questions
     for (int i = 0; i < Math.min(limitOfQuestion, questionList.size()); i++) {
         QuestionType question = questionList.get(shuffledIndices.get(i));
@@ -88,8 +61,11 @@ public class LogicFlow {
             System.out.println("C) " + question.getOptions_c());
             System.out.println("D) " + question.getOptions_d());
         }
+        if (questionClass == TrueOrFalseQuestion.class) {
+          System.out.print(question.getOptions_a() + question.getOptions_b() + question.getOptions_c() + question.getOptions_d());
+        }
         
-        String input = InputValidator.getInput(inputPattern, inputPrompt);
+        String input = getInput(inputPattern, inputPrompt);
         if (input.equals("BACK")) return;
         if (input.equals("SKIP")) {
             System.out.println("Question skipped. Correct answer is " + question.getAnswer());
@@ -103,7 +79,7 @@ public class LogicFlow {
 }
 
 // Helper method to load questions
-private List<? extends QuestionType> loadQuestions(Class<? extends QuestionType> questionClass) {
+private static List<? extends QuestionType> loadQuestions(Class<? extends QuestionType> questionClass) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
         session.beginTransaction();
         List<? extends QuestionType> questionList = session.createQuery(
@@ -118,9 +94,31 @@ private List<? extends QuestionType> loadQuestions(Class<? extends QuestionType>
     }
 }
 
+    // Reusable method for getting input with BACK option and validation
+    public static String getInput(String pattern, String prompt) {
+    while (true) {
+        System.out.println();
+        System.out.println(prompt);
+        System.out.println("Type 'BACK' to return to the main menu.");
+        System.out.println("Type 'SKIP' to skip to the next question.");
+        String input = scan.nextLine().trim().toUpperCase();
+
+        if (input.equals("BACK")) {
+            totalScore = 0;
+            numberOfQuestion = 1;
+            return "BACK";
+        }
+        if (input.equals("SKIP")) return "SKIP";
+        if (input.matches(pattern)) {
+            return input;
+        }
+        System.out.println("Invalid input. Try again.");
+    }
+}
+
 /* Method to check the answer and update the score
   It takes the user's input and the correct answer as parameters*/ 
-  public void checkAnswers(String input, String correctAnswer){
+  public static void checkAnswers(String input, String correctAnswer){
     if (input.equalsIgnoreCase(correctAnswer)) {
         System.out.println("Correct!");
         totalScore++;
@@ -133,7 +131,7 @@ private List<? extends QuestionType> loadQuestions(Class<? extends QuestionType>
 
 /* Method to reset the question counter and score
     displays the total score and a thank you message */
-  public void resetQuestions(){
+  public static void resetQuestions(){
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
     System.out.println("Total skipped questions: " + skippedQuestions);
     System.out.println("End of the quiz. Thanks for playing!");
@@ -143,43 +141,14 @@ private List<? extends QuestionType> loadQuestions(Class<? extends QuestionType>
     numberOfQuestion = 1;
   }
 
-
-// Multiple Choice Questions
-  public void multipleChoiceQuestion(){
-    System.out.println("choose the type of question" 
-        + "\n1. Science Quiz"
-        + "\n2. Geography Quiz"
-        + "\n3. General Knowledge Quiz");
-        int userChoice = InputValidator.avoidInputChoiceError(1,3);
-    switch(userChoice){
-      case 1: 
-        System.out.println("Welcome to Science Quiz");
-        runQuiz(MCQScience.class, "^[A-D]$", "Choose the correct option (A, B, C, or D):");
-        break;
-      case 2: 
-        System.out.println("Welcome to Geography Quiz");
-        runQuiz(MCQGeography.class, "^[A-D]$", "Choose the correct option (A, B, C, or D):");
-        break;
-      case 3:
-      System.out.println("Welcome to General MCQ Quiz");
-      runQuiz(GeneralMCQ.class, "^[A-D]$", "Choose the correct option (A, B, C, or D):");
-      break;
-    }
-
-}
-// True or False Questions
-  public void trueOrFalseQuestion(){
-    runQuiz(TrueOrFalseQuestion.class, "^[TF]$", "Choose the correct option (T or F):");
-  }
-
-  public void showMenu(){
+  public static void showMenu(){
     System.out.println("<--------Choose-------->");
     System.out.println("1. Multiple Choice");
     System.out.println("2. True Or False");
     System.out.println("3. Quit");
   }
 
-  public void quitProgram(){
+  public static void quitProgram(){
     System.out.println("Quitting the program. See you!");
   }
 }
