@@ -21,6 +21,4 @@ static LogicFlow scores = new LogicFlow();
         return Integer.parseInt(scanChoice);
     }
 
-
-
 }
