@@ -10,7 +10,6 @@ import com.quizzes.utilities.HibernateUtil;
 
 public class LogicFlow {
   static Scanner scan = new Scanner(System.in);
-  List<Integer> order = new ArrayList<>();
   private static int totalScore;
   private static int skippedQuestions;
   final static private int limitOfQuestion = 5;
