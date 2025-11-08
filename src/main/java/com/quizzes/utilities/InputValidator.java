@@ -21,26 +21,6 @@ static LogicFlow scores = new LogicFlow();
         return Integer.parseInt(scanChoice);
     }
 
-    // Reusable method for getting input with BACK option and validation
-    public static String getInput(String pattern, String prompt) {
-    while (true) {
-        System.out.println();
-        System.out.println(prompt);
-        System.out.println("Type 'BACK' to return to the main menu.");
-        System.out.println("Type 'SKIP' to skip to the next question.");
-        String input = scan.nextLine().trim().toUpperCase();
 
-        if (input.equals("BACK")) {
-            scores.setTotalScore(0);
-            scores.setNumberOfQuestion(1);
-            return "BACK";
-        }
-        if (input.equals("SKIP")) return "SKIP";
-        if (input.matches(pattern)) {
-            return input;
-        }
-        System.out.println("Invalid input. Try again.");
-    }
-}
 
 }
