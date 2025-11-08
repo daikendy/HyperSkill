@@ -1,0 +1,73 @@
+1. Extract common quiz logic into reusable methods
+You have very similar loops in multipleChoiceQuestion() and trueOrFalseQuestion(). Extract that logic into one method that handles any kind of question, using parameters or interfaces.
+
+2. Create a Question interface or abstract class
+Define a common interface or abstract class for question types with methods like:
+
+java
+Copy
+Edit
+interface QuestionType {
+    String[] getQuestions();
+    String[][] getOptions(); // returns null for T/F type or empty array
+    String[] getAnswer();
+    boolean hasOptions();
+}
+Implement this in both MultipleChoiceQuestion and TrueOrFalseQuestion. This way, you can write one generic method to ask any type of question.
+
+3. Unified method to run quiz for any question type
+Example:
+
+java
+Copy
+Edit
+public void runQuiz(QuestionType questionType, String inputPattern, String inputPrompt) {
+    shuffleQuestions(questionType.getQuestions().length);
+    for (int i = 0; i < limitOfQuestion; i++) {
+        int index = order.get(i);
+        System.out.println(numberOfQuestion++ + ". " + questionType.getQuestions()[index]);
+        if (questionType.hasOptions()) {
+            for (String option : questionType.getOptions()[index]) {
+                System.out.println(option);
+            }
+        }
+        String input = getInput(inputPattern, inputPrompt);
+        if (input.equals("BACK")) return;
+        checkAnswers(input, questionType.getAnswer()[index]);
+    }
+    resetQuestions();
+}
+Then your existing methods become:
+
+java
+Copy
+Edit
+public void multipleChoiceQuestion() {
+    runQuiz(new MultipleChoiceQuestion(), "[A-D]", "Enter A, B, C, or D:");
+}
+
+public void trueOrFalseQuestion() {
+    runQuiz(new TrueOrFalseQuestion(), "^[TF]$", "Enter T or F:");
+}
+4. Fix naming conventions
+Method names should be camelCase (e.g., resetQuestions instead of resetQuestions).
+
+Use singular naming when referring to one question, e.g., question instead of questions.
+
+5. Additional minor improvements
+Mark your question arrays final since they don't change.
+
+Close your Scanner resource when done (maybe in quitProgram()).
+
+Summary of what you’d do:
+Create a QuestionType interface.
+
+Implement it for both question classes.
+
+Write a single generic runQuiz() method.
+
+Call runQuiz() from your menu handlers.
+
+This greatly reduces duplicate code and keeps it clean.
+
+If you want, I can write the code for these improvements! Would you like me to?
