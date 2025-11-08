@@ -3,11 +3,11 @@ import com.quizzes.utilities.InputValidator;
 
 public class Main{
     public static void main(String[] args) {
-        LogicFlow question = new LogicFlow();
+        Questions question = new Questions();
         boolean running = true;
         // checks the condition for menu selection
         while (running) {
-            question.showMenu();
+            LogicFlow.showMenu();
             System.out.print("Enter your choice: ");
         // Handling user input; only accept valid input
         int input = InputValidator.avoidInputChoiceError(1,3);
@@ -23,7 +23,7 @@ public class Main{
                     question.trueOrFalseQuestion();
                     break;
                 case 3:
-                    question.quitProgram();
+                    LogicFlow.quitProgram();
                     running = false; // Exit the loop1
                     break;
             }
