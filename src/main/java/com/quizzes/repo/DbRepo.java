@@ -1,8 +1,20 @@
 package com.quizzes.repo;
 
-import com.quizzes.model.QuestionType;
+import com.quizzes.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@Repository
-public interface DbRepo<integer> extends JpaRepository<QuestionType, integer> { }
+import java.util.List;
+
+@NoRepositoryBean
+public interface DbRepo<T extends QuestionType> extends JpaRepository<T, Long> {
+    List<T> findAllByOrderByIdAsc();
+}
+
+
+
+
+
+
+
+
