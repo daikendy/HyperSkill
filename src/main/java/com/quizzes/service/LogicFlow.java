@@ -1,9 +1,12 @@
-package com.quizzes.model;
+package com.quizzes.service;
 
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.quizzes.model.QuestionType;
+import com.quizzes.model.TrueOrFalseQuestion;
 import org.hibernate.Session;
 
 public class LogicFlow {
@@ -93,7 +96,7 @@ public class LogicFlow {
 
     /*
      * Method to reset the question counter and score
-     * displays the total score and a thank you message
+     * displays the total score and a "thank you" message
      */
     public static void resetQuestions() {
         System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
