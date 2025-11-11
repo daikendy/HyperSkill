@@ -15,84 +15,89 @@ public class LogicFlow {
   final static private int limitOfQuestion = 5;
   private static int numberOfQuestion = 1;
 
-// runQuiz method to handle the quiz logic
-  // It takes a QuestionType object, input pattern for validation, and input prompt as parameters
-    public  static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
+  // runQuiz method to handle the quiz logic
+  // It takes a QuestionType object, input pattern for validation, and input
+  // prompt as parameters
+  public static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
     // Get the list of questions from database
     List<? extends QuestionType> questionList = loadQuestions(questionClass);
-    
+
     if (questionList.isEmpty()) {
-        System.out.println("No questions available!");
-        return;
+      System.out.println("No questions available!");
+      return;
     }
-    
+
     // Shuffle the order
     List<Integer> shuffledIndices = new ArrayList<>();
     for (int i = 0; i < questionList.size(); i++) {
-        shuffledIndices.add(i);
+      shuffledIndices.add(i);
     }
     Collections.shuffle(shuffledIndices);
 
     // Run quiz with actual questions
     for (int i = 0; i < Math.min(limitOfQuestion, questionList.size()); i++) {
-        QuestionType question = questionList.get(shuffledIndices.get(i));
-        
-        System.out.println(numberOfQuestion++ + ". " + question.getQuestions());
-        if (question.hasOptions()) {
-            System.out.println("A) " + question.getOptions_a());
-            System.out.println("B) " + question.getOptions_b());
-            System.out.println("C) " + question.getOptions_c());
-            System.out.println("D) " + question.getOptions_d());
-        }
-        if (questionClass == TrueOrFalseQuestion.class) {
-          System.out.print(question.getOptions_a() + question.getOptions_b() + question.getOptions_c() + question.getOptions_d());
-        }
-        
-        String input = getInput(inputPattern, inputPrompt);
-        if (input.equals("BACK")) return;
-        if (input.equals("SKIP")) {
-            System.out.println("Question skipped. Correct answer is " + question.getAnswer());
-            skippedQuestions++;
-            System.out.println();
-            continue;
-        }
-        checkAnswers(input, question.getAnswer());
+      QuestionType question = questionList.get(shuffledIndices.get(i));
+
+      System.out.println(numberOfQuestion++ + ". " + question.getQuestions());
+      if (question.hasOptions()) {
+        System.out.println("A) " + question.getOptions_a());
+        System.out.println("B) " + question.getOptions_b());
+        System.out.println("C) " + question.getOptions_c());
+        System.out.println("D) " + question.getOptions_d());
+      }
+      if (questionClass == TrueOrFalseQuestion.class) {
+        System.out.print(
+            question.getOptions_a() + question.getOptions_b() + question.getOptions_c() + question.getOptions_d());
+      }
+
+      String input = getInput(inputPattern, inputPrompt);
+      if (input.equals("BACK"))
+        return;
+      if (input.equals("SKIP")) {
+        System.out.println("Question skipped. Correct answer is " + question.getAnswer());
+        skippedQuestions++;
+        System.out.println();
+        continue;
+      }
+      checkAnswers(input, question.getAnswer());
     }
     resetQuestions();
-}
+  }
 
-// Helper method to load questions
-private static List<? extends QuestionType> loadQuestions(Class<? extends QuestionType> questionClass) {
+  // Helper method to load questions
+  private static List<? extends QuestionType> loadQuestions(Class<? extends QuestionType> questionClass) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        session.beginTransaction();
-        List<? extends QuestionType> questionList = session.createQuery(
-            "from " + questionClass.getSimpleName() + " order by id asc", 
-            questionClass
-        ).list();
-        session.getTransaction().commit();
-        return questionList;
+      session.beginTransaction();
+      List<? extends QuestionType> questionList = session.createQuery(
+          "from " + questionClass.getSimpleName() + " order by id asc",
+          questionClass).list();
+      session.getTransaction().commit();
+      return questionList;
     } catch (Exception e) {
-        e.printStackTrace();
-        return new ArrayList<>();
+      e.printStackTrace();
+      return new ArrayList<>();
     }
-}
+  }
 
-/* Method to check the answer and update the score
-  It takes the user's input and the correct answer as parameters*/ 
-  public static void checkAnswers(String input, String correctAnswer){
+  /*
+   * Method to check the answer and update the score
+   * It takes the user's input and the correct answer as parameters
+   */
+  public static void checkAnswers(String input, String correctAnswer) {
     if (input.equalsIgnoreCase(correctAnswer)) {
-        System.out.println("Correct!");
-        totalScore++;
-    }
-    else {
-        System.out.println("Incorrect. The correct answer is " + correctAnswer);
+      System.out.println("Correct!");
+      totalScore++;
+    } else {
+      System.out.println("Incorrect. The correct answer is " + correctAnswer);
     }
     System.out.println(); // Just for cleaner spacing
   }
 
-/* Method to reset the question counter and score
-    displays the total score and a thank you message */
-  public static void resetQuestions(){
+  /*
+   * Method to reset the question counter and score
+   * displays the total score and a thank you message
+   */
+  public static void resetQuestions() {
     System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
     System.out.println("Total skipped questions: " + skippedQuestions);
     System.out.println("End of the quiz. Thanks for playing!");
@@ -102,40 +107,41 @@ private static List<? extends QuestionType> loadQuestions(Class<? extends Questi
     numberOfQuestion = 1;
   }
 
-    // Reusable method for getting input with BACK option and validation
+  // Reusable method for getting input with BACK option and validation
   public static String getInput(String pattern, String prompt) {
     while (true) {
-        System.out.println();
-        System.out.println(prompt);
-        System.out.println("Type 'BACK' to return to the main menu.");
-        System.out.println("Type 'SKIP' to skip to the next question.");
-        String input = scan.nextLine().trim().toUpperCase();
+      System.out.println();
+      System.out.println(prompt);
+      System.out.println("Type 'BACK' to return to the main menu.");
+      System.out.println("Type 'SKIP' to skip to the next question.");
+      String input = scan.nextLine().trim().toUpperCase();
 
-        if (input.equals("BACK")) {
-            totalScore = 0;
-            numberOfQuestion = 1;
-            return "BACK";
-        }
-        if (input.equals("SKIP")) return "SKIP";
-        if (input.matches(pattern)) {
-            return input;
-        }
-        System.out.println("Invalid input. Try again.");
+      if (input.equals("BACK")) {
+        totalScore = 0;
+        numberOfQuestion = 1;
+        return "BACK";
+      }
+      if (input.equals("SKIP"))
+        return "SKIP";
+      if (input.matches(pattern)) {
+        return input;
+      }
+      System.out.println("Invalid input. Try again.");
     }
-}
+  }
 
-  public static void showMenu(){
+  public static void showMenu() {
     System.out.println("<--------Choose-------->");
     System.out.println("1. Multiple Choice");
     System.out.println("2. True Or False");
     System.out.println("3. Quit");
   }
 
-  public static void quitProgram(){
+  public static void quitProgram() {
     System.out.println("Quitting the program. See you!");
   }
 
-    public int getTotalScore() {
+  public int getTotalScore() {
     return totalScore;
   }
 
