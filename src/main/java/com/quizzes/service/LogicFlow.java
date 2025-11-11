@@ -21,7 +21,7 @@ public class LogicFlow {
     // prompt as parameters
     public static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
         // Get the list of questions from database
-        List<? extends QuestionType> questionList = loadQuestions(questionClass);
+        List<? extends QuestionType> questionList = LoadQuestionsService.loadQuestions(questionClass);
 
         if (questionList.isEmpty()) {
             System.out.println("No questions available!");
@@ -63,21 +63,6 @@ public class LogicFlow {
             checkAnswers(input, question.getAnswer());
         }
         resetQuestions();
-    }
-
-    // Helper method to load questions
-    private static List<? extends QuestionType> loadQuestions(Class<? extends QuestionType> questionClass) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            List<? extends QuestionType> questionList = session.createQuery(
-                    "from " + questionClass.getSimpleName() + " order by id asc",
-                    questionClass).list();
-            session.getTransaction().commit();
-            return questionList;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
     }
 
     /*
