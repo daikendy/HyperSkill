@@ -316,18 +316,18 @@ class TrueOrFalseQuestion implements QuestionType {
     }
     @Override
     public String getOptions_a() {
-        return "--------";
+        return "";
     }
     @Override
     public String getOptions_b() {
-        return "--------";
+        return "";
     }
     @Override
     public String getOptions_c() {
-        return "--------";
+        return "";
     }
     @Override
     public String getOptions_d() {
-        return "--------";
+        return "";
     }
 }
