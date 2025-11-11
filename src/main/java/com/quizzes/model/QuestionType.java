@@ -1,7 +1,6 @@
 package com.quizzes.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,8 +24,7 @@ public interface QuestionType extends HasNoOptionsQuestion{
     String getOptions_d();
 }
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "mcq_general")
 class GeneralMCQ implements QuestionType {
@@ -57,11 +55,9 @@ class GeneralMCQ implements QuestionType {
     public boolean hasOptions() {
         return true;
     }
-
 }
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "mcq_science")
 class MCQScience implements QuestionType  {
@@ -92,11 +88,9 @@ class MCQScience implements QuestionType  {
     public boolean hasOptions() {
         return true;
     }
-
 }
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "mcq_geography")
 class MCQGeography implements QuestionType {
@@ -127,10 +121,9 @@ class MCQGeography implements QuestionType {
     public boolean hasOptions() {
         return true;
     }
-
 }
-@Setter
-@Getter
+
+@Data
 @Entity
 @Table(name = "tf_questions")
 class TrueOrFalseQuestion implements QuestionType {
