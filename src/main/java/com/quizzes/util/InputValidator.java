@@ -1,12 +1,11 @@
 package com.quizzes.util;
 
 import java.util.Scanner;
-import com.quizzes.model.LogicFlow;
+import com.quizzes.service.LogicFlow;
 
 public class InputValidator {
 
     static Scanner scan = new Scanner(System.in);
-    static LogicFlow scores = new LogicFlow();
 
     // Method to avoid input choice error
 // It reads the input and checks if it matches the expected pattern
