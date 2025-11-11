@@ -1,9 +1,9 @@
 package com.quizzes.model;
 
 import com.quizzes.util.InputValidator;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class Questions {
     // Multiple Choice Questions
     public void multipleChoiceQuestion() {
