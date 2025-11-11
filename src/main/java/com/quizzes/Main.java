@@ -1,6 +1,6 @@
 package com.quizzes;
 
-import com.quizzes.model.LogicFlow;
+import com.quizzes.service.LogicFlow;
 import com.quizzes.model.Questions;
 import com.quizzes.util.InputValidator;
 import org.springframework.boot.SpringApplication;
