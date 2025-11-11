@@ -6,6 +6,8 @@ import com.quizzes.utilities.HibernateUtil;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -30,6 +32,7 @@ public interface QuestionType extends HasNoOptionsQuestion{
 class GeneralMCQ implements QuestionType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="questions")
@@ -110,6 +113,7 @@ class GeneralMCQ implements QuestionType {
 class MCQScience implements QuestionType  {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="questions")
@@ -190,6 +194,7 @@ class MCQScience implements QuestionType  {
 class MCQGeography implements QuestionType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="questions")
@@ -270,6 +275,7 @@ class MCQGeography implements QuestionType {
 class TrueOrFalseQuestion implements QuestionType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="questions")
