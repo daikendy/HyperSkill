@@ -1,5 +1,6 @@
 package com.quizzes.model;
 
+import com.quizzes.service.LogicFlow;
 import com.quizzes.util.InputValidator;
 import org.springframework.stereotype.Service;
 
