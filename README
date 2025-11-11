@@ -1,0 +1,117 @@
+# HyperSkill Quiz Backend
+
+A Java-based quiz management backend built with **Maven**, **Hibernate ORM**, and **MySQL**.  
+It serves as the backend core for a console-driven quiz system that supports multiple quiz types, persistent question storage, and dynamic retrieval.
+
+This version is a major upgrade from the initial prototype, introducing a fully modular structure, database persistence, and clearer separation of concerns for scalability and maintainability.
+
+---
+
+## 🚀 Features
+
+- **Modular Maven structure** — clean `src/main/java` organization for entities, services, and utilities  
+- **Database persistence (MySQL + Hibernate)** — stores questions, choices, and quiz data for scalable management  
+- **Service layer abstraction** — separates logic from data access for easier maintenance and testing  
+- **Dynamic question loading** — retrieves quiz questions directly from the database  
+- **Improved scalability & readability** — organized architecture following OOP and layered design  
+- **Fast runtime** — ~3-second cold start due to Hibernate initialization; near-instant performance afterward  
+- **Easily extensible** — new quiz types, difficulty levels, and user tracking can be added with minimal code changes
+
+---
+
+## 🧱 Project Structure
+
+HyperSkill/
+│
+├── src/
+│ ├── main/
+│ │ ├── java/com/quizzes/
+│ │ │ ├── Services/ # JPA entity classes, Logic Flow (Main, Questions, QuestionType, LogicFlow)
+│ │ │ ├── utilities/ # Utility and helper classes (InputValidator, HibernateUtil)
+│ │ │ └── Main.java # Application entry point
+│ │ └── resources/
+│ │ └── hibernate.cfg.xml # Hibernate configuration
+│ └── test/
+│
+├── pom.xml # Maven dependencies and build configuration
+└── README.md
+
+
+---
+
+## 🛠️ Technologies Used
+
+| Category | Technology |
+|-----------|-------------|
+| Language | Java 17+ |
+| Build Tool | Apache Maven |
+| ORM Framework | Hibernate |
+| Database | MySQL |
+| Pattern | Service–DAO layered architecture |
+| Style Guide | Google Java Style |
+
+---
+
+## ⚙️ Setup & Usage
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/daikendy/HyperSkill.git
+cd HyperSkill
+
+💡 Design Highlights
+
+From hardcoded to persistent — migrated from static Java-based question storage to a relational MySQL backend
+
+Improved maintainability — question updates and new quiz types now require no code changes
+
+Clear service separation — logic split into distinct services and utilities following clean architecture principles
+
+Scalable schema — supports adding users, attempts, and results tables for advanced analytics
+
+| Phase                        | Goal                                          | Key Additions                        |
+| ---------------------------- | --------------------------------------------- | ------------------------------------ |
+| **1. Spring Boot Migration** | Simplify config & enable dependency injection | Spring Boot Starter, Spring Data JPA |
+| **2. DB Migrations**         | Version-controlled schema                     | Flyway or Liquibase                  |
+| **3. API Layer**             | Expose REST endpoints                         | `@RestController`, JSON responses    |
+| **4. Observability**         | Monitoring & metrics                          | Spring Boot Actuator, Micrometer     |
+| **5. Containerization**      | Portable deployment                           | Dockerfile + docker-compose          |
+| **6. CI/CD Pipeline**        | Automated testing & build                     | GitHub Actions                       |
+| **7. Security**              | Hardened production setup                     | Spring Security, CORS rules          |
+
+
+
+🧪 Possible Enhancements
+
+Add unit & integration tests using JUnit and Mockito
+
+Integrate logging framework (SLF4J + Logback) instead of System.out.println
+
+Implement caching (Redis or Caffeine) for high-frequency queries
+
+Track metrics: average quiz duration, attempts per session, success rate
+
+Add user accounts & scoring history to support leaderboards
+
+🧑‍💻 Author
+
+Ben Daiki
+Backend Developer | Java • Hibernate • MySQL
+GitHub: @daikendy
+
+Note: This is the actively maintained version of the project.
+The /archive folder contains the deprecated prototype version with hardcoded quiz logic.
+
+
+  ✅ Optional (Future Improvement Ideas)
+Just for when you’re ready to expand:
+
+Create a QuestionItem class for better scalability.
+
+Allow dynamic number of questions via user input.
+
+Store score history across multiple rounds.
+
+Add a timer for answering questions.
+
+Export results to a file.
