@@ -1,8 +1,8 @@
 package com.quizzes.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import org.springframework.stereotype.Component;
+import lombok.Data;
 
 @Component
 @Data
