@@ -1,11 +1,11 @@
 package com.quizzes.model;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 import lombok.Data;
-import org.springframework.stereotype.Service;
 
+@Component
 @Data
-@Service
 @Entity
 @Table(name = "mcq_general")
 public class GeneralMCQ implements QuestionType {
