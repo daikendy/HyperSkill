@@ -7,21 +7,28 @@ import java.util.List;
 
 import com.quizzes.model.QuestionType;
 import com.quizzes.model.TrueOrFalseQuestion;
-import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LogicFlow {
     static Scanner scan = new Scanner(System.in);
-    private static int totalScore;
-    private static int skippedQuestions;
-    final static private int limitOfQuestion = 5;
-    private static int numberOfQuestion = 1;
+    private int totalScore;
+    private int skippedQuestions;
+    final private int limitOfQuestion = 5;
+    private int numberOfQuestion = 1;
+
+
+    private final LoadQuestionsService service;
+    public LogicFlow(LoadQuestionsService service) {
+        this.service = service;
+    }
 
     // runQuiz method to handle the quiz logic
     // It takes a QuestionType object, input pattern for validation, and input
     // prompt as parameters
-    public static void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
+    public void runQuiz(Class<? extends QuestionType> questionClass, String inputPattern, String inputPrompt) {
         // Get the list of questions from database
-        List<? extends QuestionType> questionList = LoadQuestionsService.loadQuestions(questionClass);
+        List<? extends QuestionType> questionList = service.loadQuestions(questionClass);
 
         if (questionList.isEmpty()) {
             System.out.println("No questions available!");
@@ -69,7 +76,7 @@ public class LogicFlow {
      * Method to check the answer and update the score
      * It takes the user's input and the correct answer as parameters
      */
-    public static void checkAnswers(String input, String correctAnswer) {
+    public void checkAnswers(String input, String correctAnswer) {
         if (input.equalsIgnoreCase(correctAnswer)) {
             System.out.println("Correct!");
             totalScore++;
@@ -83,7 +90,7 @@ public class LogicFlow {
      * Method to reset the question counter and score
      * displays the total score and a "thank you" message
      */
-    public static void resetQuestions() {
+    public void resetQuestions() {
         System.out.println("Total Score: " + totalScore + "/" + limitOfQuestion);
         System.out.println("Total skipped questions: " + skippedQuestions);
         System.out.println("End of the quiz. Thanks for playing!");
@@ -94,7 +101,7 @@ public class LogicFlow {
     }
 
     // Reusable method for getting input with BACK option and validation
-    public static String getInput(String pattern, String prompt) {
+    public String getInput(String pattern, String prompt) {
         while (true) {
             System.out.println();
             System.out.println(prompt);
@@ -116,14 +123,14 @@ public class LogicFlow {
         }
     }
 
-    public static void showMenu() {
+    public void showMenu() {
         System.out.println("<--------Choose-------->");
         System.out.println("1. Multiple Choice");
         System.out.println("2. True Or False");
         System.out.println("3. Quit");
     }
 
-    public static void quitProgram() {
+    public void quitProgram() {
         System.out.println("Quitting the program. See you!");
     }
 
@@ -132,7 +139,7 @@ public class LogicFlow {
     }
 
     public void setTotalScore(int totalScore) {
-        LogicFlow.totalScore = totalScore;
+        this.totalScore = totalScore;
     }
 
     public int getNumberOfQuestion() {
@@ -140,6 +147,6 @@ public class LogicFlow {
     }
 
     public void setNumberOfQuestion(int numberOfQuestion) {
-        LogicFlow.numberOfQuestion = numberOfQuestion;
+        this.numberOfQuestion = numberOfQuestion;
     }
 }
