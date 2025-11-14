@@ -8,15 +8,21 @@ import java.util.List;
 import com.quizzes.model.QuestionType;
 import com.quizzes.model.TrueOrFalseQuestion;
 import org.springframework.stereotype.Service;
+import lombok.Getter;
+import lombok.Setter;
 
 @Service
 public class LogicFlow {
     static Scanner scan = new Scanner(System.in);
+
+    @Setter
+    @Getter
     private int totalScore;
     private int skippedQuestions;
     final private int limitOfQuestion = 5;
+    @Setter
+    @Getter
     private int numberOfQuestion = 1;
-
 
     private final LoadQuestionsService service;
     public LogicFlow(LoadQuestionsService service) {
@@ -111,6 +117,7 @@ public class LogicFlow {
 
             if (input.equals("BACK")) {
                 totalScore = 0;
+                skippedQuestions = 0;
                 numberOfQuestion = 1;
                 return "BACK";
             }
@@ -132,21 +139,5 @@ public class LogicFlow {
 
     public void quitProgram() {
         System.out.println("Quitting the program. See you!");
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public int getNumberOfQuestion() {
-        return numberOfQuestion;
-    }
-
-    public void setNumberOfQuestion(int numberOfQuestion) {
-        this.numberOfQuestion = numberOfQuestion;
     }
 }
