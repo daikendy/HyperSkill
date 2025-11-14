@@ -2,9 +2,9 @@ package com.quizzes.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @Data
 @Entity
 @Table(name = "tf_questions")

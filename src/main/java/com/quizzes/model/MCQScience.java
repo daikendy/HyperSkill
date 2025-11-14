@@ -2,10 +2,10 @@ package com.quizzes.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+@Component
 @Data
-@Service
 @Entity
 @Table(name = "mcq_science")
 public class MCQScience implements QuestionType  {
