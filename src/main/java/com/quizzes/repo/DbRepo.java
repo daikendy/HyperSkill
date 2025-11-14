@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.List;
 
 @NoRepositoryBean
-public interface DbRepo<T extends QuestionType> extends JpaRepository<T, Long> {
+public interface DbRepo<T extends QuestionType> extends JpaRepository<T, Integer> {
     List<T> findAllByOrderByIdAsc();
 }
 
