@@ -1,36 +1,37 @@
 package com.quizzes.service;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.quizzes.model.QuestionType;
-import com.quizzes.model.TrueOrFalseQuestion;
 import org.springframework.stereotype.Service;
-import lombok.Getter;
-import lombok.Setter;
+
 
 @Service
 public class LogicFlow {
 
-    final private int limitOfQuestion = 5;
     private final LoadQuestionsService service;
     public LogicFlow(LoadQuestionsService service) {this.service = service;}
 
-    // runQuiz method to handle the quiz logic
-    // It takes a QuestionType object, input pattern for validation, and input
-    // prompt as parameters
-    public  List<? extends QuestionType> generateQuestions(Class<? extends QuestionType> questionClass) {
+    // Generates Questions
+    public  List<QuestionType> generateQuestions(Class<? extends QuestionType> questionClass) {
         // Get the list of questions from database
         List<? extends QuestionType> questionList = service.loadQuestions(questionClass);
+        if (questionList.isEmpty()) return Collections.emptyList();
 
+        // Shuffles the questions
+        List<QuestionType> shuffled = new ArrayList<>(questionList);
+        Collections.shuffle(shuffled);
+
+        // Limit the Questions
+        int limitOfQuestion = 5;
+        int numberOfQuestions = Math.min(limitOfQuestion, shuffled.size());
+        return shuffled.subList(0, numberOfQuestions);
     }
 
-    /*
-     * Method to check the answer and update the score
-     * It takes the user's input and the correct answer as parameters
-     */
+    // Validates Answer
     public boolean checkAnswers(String input, String correctAnswer) {
-        return input.equalsIgnoreCase(correctAnswer);
+        if (input == null || correctAnswer == null) return false;
+        return input.trim().equalsIgnoreCase(correctAnswer.trim());
     }
 }
