@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master 3000</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div id="home-screen" class="screen">
+            <header>
+                <h1>🎯 Quiz Master 3000</h1>
+                <p>Select your challenge</p>
+            </header>
+            
+            <div class="category-grid">
+                <button class="quiz-card" data-type="McqScience">
+                    <span class="icon">🧪</span>
+                    <h3>Science</h3>
+                    <span class="badge">Are you the next Einstein?</span>
+                </button>
+                
+                <button class="quiz-card" data-type="McqGeography">
+                    <span class="icon">🌍</span>
+                    <h3>Geography</h3>
+                    <span class="badge">Explore the world</span>
+                </button>
+
+                <button class="quiz-card" data-type="GeneralMCQ">
+                    <span class="icon">🧠</span>
+                    <h3>General</h3>
+                    <span class="badge">Test your knowledge</span>
+                </button>
+
+                <button class="quiz-card" data-type="TrueOrFalse">
+                    <span class="icon">⚖️</span>
+                    <h3>True/False</h3>
+                    <span class="badge">Are you a truth-seeker?</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen hidden">
+            
+            <div class="quiz-header">
+                <span id="category-title">Science Quiz</span>
+                <span id="timer">⏱️ 15</span>
+            </div>
+
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
+
+            <div class="question-box">
+                <p id="question-count">Question 1/5</p>
+                <h2 id="question-text">Loading question...</h2>
+            </div>
+
+            <div class="options-grid" id="options-container">
+            </div>
+
+            <div class="quiz-footer">
+                <button id="exit-btn">← Start Over</button>
+            </div>
+
+        </div>
+
+        <div id="result-screen" class="screen hidden">
+            <div class="result-card">
+                <h1>🎉 Quiz Complete!</h1>
+                
+                <div class="score-box">
+                    <p>Your Score</p>
+                    <h2 id="final-score">0 / 5</h2>
+                    <p id="score-percentage">(0%)</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="restart-btn" class="primary-btn">Try Again</button>
+                    <button id="home-btn" class="secondary-btn">Home</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
