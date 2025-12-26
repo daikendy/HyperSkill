@@ -9,7 +9,13 @@ graph TD
     GitHub -->|Auto-Build| Render
     end
 
-    ## 📸 Screenshots
+    style Vercel fill:#000,color:#fff,stroke:#333
+    style Render fill:#43a047,color:#fff,stroke:#333
+    style TiDB fill:#007bff,color:#fff,stroke:#333
+    style GitHub fill:#24292e,color:#fff,stroke:#333
+```
+
+## 📸 Screenshots
 
 | Home Screen | Live Quiz |
 | :---: | :---: |
