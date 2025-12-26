@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App</title>
+</head>
+<body>
+
+<h1>My Java Quiz App</h1>
+
+<div id="quiz-container">
+    <button onclick="startQuiz()">Start General MCQ Quiz</button>
+</div>
+
+<script>
+    // The URL of your Java Backend
+    const BASE_URL = "http://localhost:8080/api/quiz";
+
+    async function startQuiz() {
+        // 1. Fetch data from Java
+        // This is exactly like 'requests.get' in Python
+        try {
+            const response = await fetch(`${BASE_URL}/start?type=GeneralMCQ`);
+            const questions = await response.json(); // Convert response to JSON
+
+            // 2. Show the first question (Just testing connection)
+            const container = document.getElementById("quiz-container");
+
+            // This replaces the HTML inside the container
+            container.innerHTML = `
+                <h2>${questions[0].questions}</h2>
+                <button>A) ${questions[0].options_a}</button>
+                <button>B) ${questions[0].options_b}</button>
+                <button>C) ${questions[0].options_c}</button>
+                <button>D) ${questions[0].options_d}</button>
+            `;
+        } catch (error) {
+            console.error("Error connecting to server:", error);
+            alert("Could not connect to the backend! Is Spring Boot running?");
+        }
+    }
+</script>
+</body>
+</html>

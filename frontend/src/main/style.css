@@ -1,0 +1,228 @@
+/* 1. SETUP & VARIABLES (Based on your Git Image) */
+:root {
+    --bg-dark: #0f172a;       /* Dark Blue/Black */
+    --bg-card: #1e293b;       /* Slightly lighter for cards */
+    --neon-green: #4ade80;    /* For Success/Beginner */
+    --neon-blue: #60a5fa;     /* For Science/Info */
+    --neon-pink: #f472b6;     /* For Accents */
+    --neon-yellow: #facc15;   /* For Warnings/Intermediate */
+    --text-main: #f8fafc;     /* White-ish */
+    --font-mono: 'Courier New', Courier, monospace; /* The "Dev" look */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-dark), #312e81);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    /* Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* 2. UTILITY CLASSES (The Magic Switch) */
+.hidden {
+    display: none !important;
+}
+
+/* 3. HOME SCREEN */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 20px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columns */
+    gap: 15px;
+}
+
+.quiz-card {
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-family: var(--font-mono);
+}
+
+.quiz-card:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+    transform: translateY(-2px);
+}
+
+.quiz-card .icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* 4. QUIZ SCREEN */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--neon-blue);
+}
+
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--neon-green);
+    width: 0%; /* JS will change this to 20%, 40%, etc. */
+    transition: width 0.3s ease;
+}
+
+.question-box {
+    margin-bottom: 30px;
+}
+
+#question-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: all 0.2s;
+}
+
+.option-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--neon-blue);
+}
+
+/* 5. RESULT SCREEN */
+.result-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.score-box {
+    margin: 30px 0;
+    padding: 20px;
+    border: 2px dashed var(--neon-yellow);
+    border-radius: 12px;
+}
+
+#final-score {
+    font-size: 3rem;
+    color: var(--neon-yellow);
+    margin: 10px 0;
+}
+
+.primary-btn, .secondary-btn {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.primary-btn {
+    background: var(--neon-green);
+    color: #000;
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+}
+
+/* Footer Styling - Moves the button to the bottom left */
+.quiz-footer {
+    display: flex;            /* Enables flexible positioning */
+    justify-content: flex-start; /* Aligns content to the LEFT */
+    margin-top: 30px;         /* Pushes it down away from the options */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Optional divider line */
+}
+
+#exit-btn {
+    background: transparent;
+    border: 2px solid #f472b6; /* Neon Pink border thickness */
+    color: #f472b6;
+    padding: 10px 25px;       /* Makes it look like a nice pill button */
+    border-radius: 8px;       /* Rounded corners */
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+#exit-btn:hover {
+    background: #f472b6;      /* Fills with pink on hover */
+    color: #0f172a;           /* Dark text */
+    transform: translateX(5px); /* Tiny nudge to the right when hovered */
+}
+
+#music-btn {
+    background: transparent;
+    border: 2px solid #f472b6; /* Neon Pink border thickness */
+    color: #f472b6;
+    padding: 10px 25px;       /* Makes it look like a nice pill button */
+    border-radius: 8px;       /* Rounded corners */
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-top: 10px;         /* Pushes it down away from the options */
+    display: block;      /* Necessary for margins to work on a button */ 
+}
+#music-btn:hover {
+    background: #f472b6;      /* Fills with pink on hover */
+    color: #0f172a;           /* Dark text */
+    transform: translateX(5px); /* Tiny nudge to the right when hovered */
+}
