@@ -206,3 +206,23 @@ header {
     color: #0f172a;           /* Dark text */
     transform: translateX(5px); /* Tiny nudge to the right when hovered */
 }
+
+#music-btn {
+    background: transparent;
+    border: 2px solid #f472b6; /* Neon Pink border thickness */
+    color: #f472b6;
+    padding: 10px 25px;       /* Makes it look like a nice pill button */
+    border-radius: 8px;       /* Rounded corners */
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-top: 10px;         /* Pushes it down away from the options */
+    display: block;      /* Necessary for margins to work on a button */ 
+}
+#music-btn:hover {
+    background: #f472b6;      /* Fills with pink on hover */
+    color: #0f172a;           /* Dark text */
+    transform: translateX(5px); /* Tiny nudge to the right when hovered */
+}
