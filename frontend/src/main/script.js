@@ -1,7 +1,6 @@
 // 1. CONSTANTS & STATE (Memory)
 // Change this to your Render/Railway URL when you deploy!
-const API_BASE_URL = "http://localhost:8080/api/quiz";
-
+const API_BASE_URL = "https://quizmaster-sh0j.onrender.com/api/quiz";
 let currentQuestions = []; // Stores the 5 questions from Java
 let currentQuestionIndex = 0;
 let score = 0;
