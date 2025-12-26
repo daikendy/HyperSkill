@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     User((User Browser)) -->|HTTPS| Vercel[Vercel: Frontend UI]
     Vercel -->|REST API Calls| Render[Render: Spring Boot Backend]
@@ -7,11 +8,6 @@ graph TD
     GitHub[GitHub Repo] -->|Auto-Build| Vercel
     GitHub -->|Auto-Build| Render
     end
-
-    style Vercel fill:#000,color:#fff,stroke:#333
-    style Render fill:#43a047,color:#fff,stroke:#333
-    style TiDB fill:#007bff,color:#fff,stroke:#333
-    style GitHub fill:#24292e,color:#fff,stroke:#333
 
     ## 📸 Screenshots
 
