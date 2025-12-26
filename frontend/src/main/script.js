@@ -247,3 +247,17 @@ function restartApp() {
     score = 0;
     currentQuestionIndex = 0;
 }
+
+// Music Toggle Functionality
+const music = document.getElementById('bg-music');
+const btn = document.getElementById('music-btn');
+
+function toggleMusic() {
+    if (music.paused) {
+    music.play();
+    btn.innerText = "⏸️ Pause Music";
+    } else {
+    music.pause();
+    btn.innerText = "🎵 Play Music";
+    }
+}
