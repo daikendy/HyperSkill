@@ -57,7 +57,7 @@ async function startQuiz(type) {
     // UI: Show loading state
     homeScreen.classList.add("hidden");
     quizScreen.classList.remove("hidden");
-    questionText.innerText = "Loading questions from Java...";
+    questionText.innerText = "Loading questions from the server... Wait for the server to wake up! It takes 30-120 seconds.";
     
     quizCategory = type;
     score = 0;
