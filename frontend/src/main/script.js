@@ -84,29 +84,25 @@ async function startQuiz(type) {
 // FUNCTION B: Show One Question (DOM Manipulation)
 function showQuestion() {
     const question = currentQuestions[currentQuestionIndex];
-    // ADD THIS AT THE BOTTOM of showQuestion
     startTimer();
 
-    // 1. Update Progress Bar (e.g., 20%, 40%)
+    // 1. Update Progress Bar
     const progressPercent = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
     progressBar.style.width = `${progressPercent}%`;
 
     // 2. Update Text
     questionCountText.innerText = `Question ${currentQuestionIndex + 1}/${currentQuestions.length}`;
-    questionText.innerText = question.questions; // Ensure this matches your Java JSON key!
+    questionText.innerText = question.questions;
 
-    // NEW LOGIC STARTS HERE
+    // Define Options
     let options = [];
 
-    // Check if we are playing True/False or normal MCQ
     if (quizCategory === "TrueOrFalse") {
-        // Force specific options for T/F
         options = [
             { label: "T", text: "True" },
             { label: "F", text: "False" }
         ];
     } else {
-        // Standard behavior for Science, Geo, etc.
         options = [
             { label: "A", text: question.options_a },
             { label: "B", text: question.options_b },
@@ -116,35 +112,26 @@ function showQuestion() {
     }
 
     // 3. Create Buttons dynamically
-    optionsContainer.innerHTML = ""; // Clear old buttons
-    
-
-    // options.forEach(opt => {
-    //     const btn = document.createElement("button");
-    //     btn.classList.add("option-btn");
-    //     btn.innerText = `${opt.label}) ${opt.text}`;
-        
-    //     // Add Click Event to check answer
-    //     // ✅ CORRECT (Sends "D")
-    //     btn.addEventListener("click", () => handleAnswer(opt.label, question.answer));
-        
-    //     optionsContainer.appendChild(btn);
-    // });
-    // 3. Create Buttons dynamically (This part stays mostly the same)
     optionsContainer.innerHTML = ""; 
     
     options.forEach(opt => {
         const btn = document.createElement("button");
         btn.classList.add("option-btn");
         
-        // VISUAL TWEAK: For T/F, just show "True" (not "T) True")
+        // --- THIS IS THE CRITICAL FIX ---
+        // We attach the label (A, B, C, D) to the button invisibly.
+        // The handleAnswer function will read this instead of the innerText.
+        btn.dataset.label = opt.label; 
+        // -------------------------------
+
+        // Visual Text
         if (quizCategory === "TrueOrFalse") {
             btn.innerText = opt.text;
         } else {
             btn.innerText = `${opt.label}) ${opt.text}`;
         }
         
-        // CRITICAL: This ensures we send "T" or "F" to match your DB
+        // Click Event
         btn.addEventListener("click", () => handleAnswer(opt.label, question.answer));
         
         optionsContainer.appendChild(btn);
@@ -193,13 +180,13 @@ async function handleAnswer(userAnswer, correctAnswer) {
         score++;
         // Visual Feedback (Green)
         buttons.forEach(btn => {
-            if (btn.innerText.includes(userAnswer)) btn.style.borderColor = "#4ade80"; // Neon Green
+            if (btn.dataset.label === userAnswer) btn.style.borderColor = "#4ade80"; // Neon Green
         });
     } else {
         // Visual Feedback (Red)
         buttons.forEach(btn => {
-            if (btn.innerText.includes(userAnswer)) btn.style.borderColor = "#ef4444"; // Red
-            if (btn.innerText.includes(correctAnswer)) btn.style.borderColor = "#4ade80"; // Show correct one
+            if (btn.dataset.label === userAnswer) btn.style.borderColor = "#ef4444"; // Red
+            if (btn.dataset.label === correctAnswer) btn.style.borderColor = "#4ade80"; // Show correct one
         });
     }
 
